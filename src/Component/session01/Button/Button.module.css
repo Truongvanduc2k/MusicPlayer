@@ -1,0 +1,26 @@
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    width: 330px;
+    border-radius: 20px;
+    border: 2px solid #000000;
+  }
+.text {
+    flex: 5;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    line-height: 20px;
+  }
+.icon{
+    flex: 1;
+    margin-left: 35px;
+  }
+.icon > img{
+    width: 21px;
+    height: 21px;
+}
+.icon2{
+    flex: 1;
+}

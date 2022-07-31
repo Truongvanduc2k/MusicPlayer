@@ -1,0 +1,44 @@
+.item{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid rgb(43, 43, 43);
+    padding: 20px;
+    gap:20px;
+}
+
+.images{
+    max-width: 165px;
+    max-height: 280px;
+}
+.describe{
+    color: rgb(90, 86, 86);
+}
+.option{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.option > h2{
+    margin: 3px;
+}
+.describe{
+    text-align: center;
+}
+.add{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+    background-color: #4EC67F;
+    padding: 10px 20px;
+
+}
+.add > img{
+    width: 20px;
+    border-radius: 5px;
+}

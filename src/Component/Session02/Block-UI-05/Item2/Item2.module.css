@@ -1,0 +1,19 @@
+.Item2{
+    color: aliceblue;
+    box-shadow: 5px 5px #e8ebf0;
+}
+.name{
+    padding: 15px 15px 0 18px;
+    font-size: 300;
+}
+.field{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start ;
+    gap: 8px;
+    padding: 0px 15px 15px 15px;
+}
+.srcImg{
+    font-size: 25px;
+    margin-bottom: -8px;
+}

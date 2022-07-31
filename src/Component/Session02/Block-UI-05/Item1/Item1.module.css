@@ -1,0 +1,17 @@
+.Item1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgb(104, 153, 130);
+    padding: 7px;
+}
+.field{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 7px ;
+}
+.infor{
+    margin-right: 7px ;
+    color: rgb(92, 88, 88);
+}
