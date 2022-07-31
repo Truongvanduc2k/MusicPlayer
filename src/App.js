@@ -6,8 +6,8 @@ import Productdetails from './Productdetails';
 function App() {
   return (
     <div className="App">
-      {/* <PlayMusic></PlayMusic> */}
-      <Productdetails/>
+      <PlayMusic></PlayMusic>
+      {/* <Productdetails/> */}
     </div>
   );
 }
