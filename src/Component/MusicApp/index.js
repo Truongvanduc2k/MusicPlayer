@@ -68,28 +68,20 @@ export default function PlayMusic() {
         <div>
           {songs.map((song, index) => {
             return (
-              <div key={index}
-                className={[styles.container, songIndex === index ? styles.songPlaying : ''].join(' ')}>
-                <div className={styles.id}><h4>{song.id}</h4></div>
-                <div className={styles.imageUrl}><img src={song.imageUrl} alt='' /></div>
-                <div className={styles.title}
-                  onClick={() => { clickSongItem(index) }}>
-                  <h4>{song.title}</h4></div>
-                <div className={styles.artist}>{song.artist}</div>
-                <div className={styles.duration}>{`${Math.floor(song.duration / 60)}:${song.duration % 60}s`}</div>
-                <div className={songIndex === index ? styles.tym2 : styles.tym}>
-                  <button
-                    style={{ color: likeLists[index] === 'true' ? 'red' : '#abb6b6' }}
-                    onClick={() => clickLike(index)}
-                  ><TiHeartFullOutline /></button>
-                </div>
-              </div>
+              <SongItem 
+              song={song} 
+              songplaying={songIndex} 
+              isLike={likeLists[index]} 
+              clickSongItem={()=> clickSongItem(index)} 
+              clickLike={()=> clickLike(index) 
+              } />
             );
           })}
         </div>
       </div>
       {/* Play Music */}
       <div className={styles.playmusic}>
+        {/* Disc  */}
         <div className={styles.disc_container}>
           <div className={[styles.disc, status === 'play' ? styles.disc_rotation : ''].join(' ')}
             style={{ backgroundImage: `url(${songs[songIndex].imageUrl})`, }}>

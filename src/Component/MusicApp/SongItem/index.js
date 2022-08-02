@@ -3,20 +3,23 @@ import styles from './SongItem.module.css';
 import { TiHeartOutline} from "react-icons/ti";
 
 function SongItem(
-    { song,
+    { 
+      song,
       songplaying,
       isLike,
       clickLike,
       clickSongItem,
     }) {
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, songplaying === song.id ? styles.songPlaying : ''].join(' ')}>
         <div className={styles.id}><h4>{song.id}</h4></div>
-        <div className={styles.imageUrl}>{song.imageUrl} </div>
+        <div className={styles.imageUrl}><img src={song.imageUrl} alt='' /></div>
         <div className={styles.title} onClick={clickSongItem}>{song.title}</div>
         <div className={styles.artist}>{song.artist}</div>
-        <div className={styles.duration}>{song.duration}</div>
-        <div className={styles.tym} onClick={clickLike}><button><TiHeartOutline/></button></div>
+        <div className={styles.duration}>{`${Math.floor(song.duration / 60)}:${song.duration % 60}s`}</div>
+        <div className={songplaying === song.id ? styles.tym2 : styles.tym}
+        style={{ color: isLike === 'true' ? 'red' : '#abb6b6' }}
+        onClick={clickLike}><button><TiHeartOutline/></button></div>
     </div>
   )
 }
