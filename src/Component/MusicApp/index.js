@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import styles from './MusicApp.module.css'
 import { TiMediaRewindOutline, TiMediaFastForwardOutline, TiMediaPauseOutline, TiMediaPlayOutline } from "react-icons/ti";
-import { TiArrowRepeat, TiArrowShuffle, TiVolumeMute, TiVolumeDown, TiVolumeUp } from "react-icons/ti";
+import { TiArrowRepeat, TiArrowShuffle, TiHeartFullOutline, TiVolumeMute, TiVolumeDown, TiVolumeUp } from "react-icons/ti";
 import SongItem from './SongItem';
 import songs from './Data';
 
@@ -68,13 +68,13 @@ export default function PlayMusic() {
         <div>
           {songs.map((song, index) => {
             return (
-              <SongItem
-                song={song}
-                songplaying={songIndex}
-                isLike={likeLists[index]}
-                clickSongItem={() => clickSongItem(index)}
-                clickLike={() => clickLike(index)
-                } />
+              <SongItem 
+              song={song} 
+              songplaying={songIndex} 
+              isLike={likeLists[index]} 
+              clickSongItem={()=> clickSongItem(index)} 
+              clickLike={()=> clickLike(index) 
+              } />
             );
           })}
         </div>
