@@ -17,9 +17,11 @@ function SongItem(
       <div className={styles.title} onClick={clickSongItem}>{song.title}</div>
       <div className={styles.artist}>{song.artist}</div>
       <div className={styles.duration}>{`${Math.floor(song.duration / 60)}:${song.duration % 60}s`}</div>
-      <div className={songplaying === song.id ? styles.tym2 : styles.tym}
-        style={{ color: isLike === 'true' ? 'red' : '#abb6b6' }}
-        onClick={clickLike}><button><TiHeartFullOutline /></button></div>
+      <div className={songplaying === song.id ? styles.tym2 : styles.tym}>
+        <button style={{ color: isLike === 'true' ? 'red' : '#abb6b6' }}
+          onClick={clickLike}><TiHeartFullOutline />
+        </button>
+      </div>
     </div>
   )
 }

@@ -30,7 +30,6 @@ export default function PlayMusic() {
     if (status !== 'play') {
       refPlayer.current?.play();
       refPlayer.current.autoplay = true;
-      console.log(refPlayer.current.autoplay)
       setStatus('play');
     } else {
       refPlayer.current?.pause();
@@ -43,6 +42,7 @@ export default function PlayMusic() {
     setStatus('play');
   };
   const clickSongItem = (index) => {
+    refPlayer.current.autoplay = true;
     setStatus('play');
     setSongIndex(index)
   }
