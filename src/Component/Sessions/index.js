@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from './Component/Sessions/session01/Button/index';
-import Search from './Component/Sessions/session01/Seacrh';
-import Card from './Component/Sessions/session01/Card';
-import BlockUI06 from './Component/Sessions/Session02/Block-UI-06';
-import BlockUI05 from './Component/Sessions/Session02/Block-UI-05';
+import Button from './session01/Button/index';
+import Search from './session01/Seacrh';
+import Card from './session01/Card';
+import BlockUI06 from './Session02/Block-UI-06';
+import BlockUI05 from './Session02/Block-UI-05';
 
 function Sessions() {
     return (
