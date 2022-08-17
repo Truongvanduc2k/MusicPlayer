@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+.container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.login,
+.register{
+    background-color: rgb(90, 180, 105);
+    line-height: 24px;
+    padding: 20px;
+}
+.login  div,
+.register  div{
+    display: flex;
+    justify-content: space-between;
+}
