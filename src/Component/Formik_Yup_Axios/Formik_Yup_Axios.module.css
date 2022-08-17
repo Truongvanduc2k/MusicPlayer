@@ -9,13 +9,13 @@
 }
 
 .login,
-.register{
+.signup{
     background-color: rgb(90, 180, 105);
     line-height: 24px;
     padding: 20px;
 }
 .login  div,
-.register  div{
+.signup  div{
     display: flex;
     justify-content: space-between;
 }
