@@ -8,9 +8,19 @@ import axios from 'axios';
 
 function StudentManager() {
     const [listStudent, setListStudent] = useState([]);
+    const [formData, setFormData] = useState(null);
     const [error, setError] = useState([]);
-    // const [statusInput, setStatusInput] = useState('add');
+    const [status, setStatus] = useState(true); //true = 'add', flase = update
 
+    const initialValues = {
+        studentCode: '',
+        fullname: '',
+        gender: 'nam',
+        birthday: '',
+        phone: '',
+        email: '',
+        address: '',
+    }
     useEffect(() => {
         axios
             .get("http://localhost:9000/student/")
@@ -23,68 +33,63 @@ function StudentManager() {
         studentCode: Yup.string().required('Required'),
         fullname: Yup.string().required('Required'),
         gender: Yup.string().required('Required').oneOf(['nam', 'nữ']),
-        birthday: Yup.date().required('Required'),
+        birthday: Yup.string().required('Required'),
         phone: Yup.string().required('Required'),
         email: Yup.string().required('Required'),
         address: Yup.string().required('Required'),
     });
     const Add = (values) => {
-        // console.log(values);
+        delete values._id;
+        axios
+            .post("http://localhost:9000/student/", values)
+            .then((res) => {
+                const newStudentID = res.data.result.insertedId;
+                const newList = [...listStudent, { ...values, _id: newStudentID }];
+                setListStudent(newList);
+                setFormData(initialValues);
+            })
+            .catch((error) => setError(error.message))
+            .finally(() => console.log("add finished"));
     };
-    // const Edit = (index, item) => {
-    //     setId(item.id);
-    //     setName(item.name);
-    //     setDescription(item.description);
-    //     setStatusInput('edit');
-    // };
-    // const ExitUpdate = () => {
-    //     setId('');
-    //     setName('');
-    //     setDescription('');
-    //     setStatusInput('add');
-    // };
-    // const Update = (id, name, description) => {
-    //     const newInfor = { name: name, description: description };
-    //     console.log(newInfor)
-    //     axios.patch(`http://localhost:9000/categories/${id}`, newInfor)
-    //         .then((response) => {
-    //             console.log(response.data)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    //     setInfor({});
-    //     setId('');
-    //     setName('');
-    //     setDescription('');
-    //     setStatusInput('add');
-    // };
-    // const Delete = (item) => {
-    //     axios.delete(`http://localhost:9000/categories/${item.id}`)
-    //         .then((response) => {
-    //             console.log(response.data)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    //     setInfor({});
-    // };
+    const Edit = (item) => {
+        setStatus(false)
+        setFormData(item);
+    };
+    const Update = (values) => {
+        axios.patch(`http://localhost:9000/student/${values._id}`, values)
+            .then((response) => {
+                console.log(response)
+                const newList = listStudent.map((item, index)=>{
+                    if (item._id === values._id) {
+                        return values;
+                    } else return item;
+                })
+                setListStudent(newList);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+    const Delete = (item) => {
+        axios.delete(`http://localhost:9000/student/${item._id}`)
+            .then((res) => {
+                console.log(res);
+                const newList = listStudent.filter(i => i !== item);
+                setListStudent(newList);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
     return (
         <div className={styles.container}>
             <div className={styles.form}>
                 <h2>Student Infor</h2>
                 <Formik
                     validationSchema={inforSchema}
-                    initialValues={{
-                        studentCode: '',
-                        fullname: '',
-                        gender: '',
-                        birthday: '',
-                        phone: '',
-                        email: '',
-                        address: '',
-                    }}
-                    onSubmit={Add}
+                    initialValues={formData || initialValues}
+                    onSubmit={status ? Add : Update}
+                    enableReinitialize
                 >
                     <Form>
                         <label htmlFor='studentCode'>Student code</label>
@@ -98,7 +103,10 @@ function StudentManager() {
                             <ErrorMessage name='fullname' />
                         </div>
                         <label htmlFor='gender'>Gender</label>
-                        <Field id='gender' name='gender' placeholder='Please enter gender' type='gender' />
+                        <Field id='gender' name='gender' placeholder='Please enter gender' as='select' >
+                            <option value="nam">nam</option>
+                            <option value="nữ">nữ</option>
+                        </Field>
                         <div style={{ color: 'red' }}>
                             <ErrorMessage name='gender' />
                         </div>
@@ -122,39 +130,55 @@ function StudentManager() {
                         <div style={{ color: 'red' }}>
                             <ErrorMessage name='address' />
                         </div>
-                        <button type='submit'>Login</button>
+                        <button type='submit' style={status ? {} : { display: 'none' }}>Add</button>
+                        <button type='reset' style={status ? {} : { display: 'none' }}
+                            onClick={() => setFormData(initialValues)}>Reset</button>
+                        <button type='submit' style={!status ? {} : { display: 'none' }}
+                            onClick={Update}
+                        >Update</button>
+                        <button type='reset' style={!status ? {} : { display: 'none' }}
+                            onClick={() => {
+                                setStatus(!status)
+                                setFormData(initialValues)
+                            }}>Cancle</button>
                     </Form>
                 </Formik>
             </div>
             <div className={styles.list}>
                 <h2>Student List</h2>
                 <table>
-                    <tr>
-                        <th>Number</th>
-                        <th>Student code</th>
-                        <th>Fullname</th>
-                        <th>Gender</th>
-                        <th>Birthday</th>
-                        <th>Phone number</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                    </tr>
-                    {
-                        listStudent.map((item, index) => {
-                            return (
-                                <tr key={item.studentCode}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.studentCode}</td>
-                                    <td>{item.fullname}</td>
-                                    <td>{item.gender}</td>
-                                    <td>{item.birthday}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.address}</td>
-                                </tr>
-                            )
-                        })
-                    }
+                    <tbody>
+                        <tr>
+                            <th>Number</th>
+                            <th>ID</th>
+                            <th>Student code</th>
+                            <th>Fullname</th>
+                            <th>Gender</th>
+                            <th>Birthday</th>
+                            <th>Phone number</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                        </tr>
+                        {
+                            listStudent.map((item, index) => {
+                                return (
+                                    <tr key={item.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{item._id}</td>
+                                        <td>{item.studentCode}</td>
+                                        <td>{item.fullname}</td>
+                                        <td>{item.gender}</td>
+                                        <td>{item.birthday}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.address}</td>
+                                        <td><button onClick={() => Edit(item)}>Edit</button></td>
+                                        <td><button onClick={() => Delete(item, index)}>Delete</button></td>
+                                    </tr>
+                                );
+                            })
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
