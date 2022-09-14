@@ -59,12 +59,14 @@ function StudentManager() {
         axios.patch(`http://localhost:9000/student/${values._id}`, values)
             .then((response) => {
                 console.log(response)
-                const newList = listStudent.map((item, index)=>{
+                const newList = listStudent.map((item, index) => {
                     if (item._id === values._id) {
                         return values;
                     } else return item;
                 })
                 setListStudent(newList);
+                setFormData(initialValues);
+                setStatus(!status)
             })
             .catch((error) => {
                 console.log(error)
